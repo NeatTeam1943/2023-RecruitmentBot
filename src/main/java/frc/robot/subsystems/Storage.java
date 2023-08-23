@@ -14,6 +14,9 @@ public class Storage extends SubsystemBase {
   private DoubleSolenoid m_topStorageSolonoid;
   private DoubleSolenoid m_bottomStorageSolonid;
 
+  private boolean m_toggleTopSolonoid = false;
+  private boolean m_toggleBottomSolonoid = false;
+
   public Storage() {
     m_topStorageSolonoid = new DoubleSolenoid(
         PneumaticsModuleType.REVPH,
@@ -49,6 +52,19 @@ public class Storage extends SubsystemBase {
 
       case Bottom:
         m_bottomStorageSolonid.set(value);
+        break;
+    }
+  }
+  public void toggleSolonoid(WhichStorage solonoid) {
+    switch (solonoid) {
+      case TOP:
+        setSolonid(WhichStorage.TOP, m_toggleTopSolonoid ? Value.kReverse : Value.kForward);
+        m_toggleTopSolonoid = !m_toggleTopSolonoid;
+        break;
+
+      case BOTTOM:
+        setSolonid(WhichStorage.BOTTOM, m_toggleBottomSolonoid ? Value.kReverse : Value.kForward);
+        m_toggleBottomSolonoid = !m_toggleBottomSolonoid;
         break;
     }
   }
