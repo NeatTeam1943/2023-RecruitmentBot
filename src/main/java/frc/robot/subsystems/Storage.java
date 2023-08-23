@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -29,32 +31,40 @@ public class Storage extends SubsystemBase {
         StorageConstants.kBottomSolonoidRetract);
   }
 
-/**
- * <h3> Chooses which storage solonoid to use.</h3>
- */
-  enum WhichStorage{
+  /**
+   * <h3>Chooses which storage solonoid to use.</h3>
+   */
+  public enum WhichStorage {
     TOP,
-    Bottom
+    BOTTOM
   }
 
   /**
-   * <h2> Sets the DoubleSolenoid's value. </h2>
-   * <p> basically -> Should the solonoid be retracked or deployed :D </p>
+   * <h2>Sets the DoubleSolenoid's value.</h2>
+   * <p>
+   * basically -> Should the solonoid be retracked or deployed :D
+   * </p>
    * 
    * @param solonoid The DoubleSolenoid to set
-   * @param value The value to set the DoubleSolenoid to 
+   * @param value    The value to set the DoubleSolenoid to
    */
-  public void setSolonid(WhichStorage solonoid, Value value){
-    switch(solonoid){
+  public void setSolonid(WhichStorage solonoid, Value value) {
+    switch (solonoid) {
       case TOP:
         m_topStorageSolonoid.set(value);
         break;
 
-      case Bottom:
+      case BOTTOM:
         m_bottomStorageSolonid.set(value);
         break;
     }
   }
+
+  /**
+   * <h3>Toggles the DoubleSolenoid's value.</h3>
+   * 
+   * @param solonoid The DoubleSolenoid to toggle
+   */
   public void toggleSolonoid(WhichStorage solonoid) {
     switch (solonoid) {
       case TOP:
