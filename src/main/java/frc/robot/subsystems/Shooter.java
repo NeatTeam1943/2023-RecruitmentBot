@@ -16,7 +16,6 @@ public class Shooter extends SubsystemBase {
 
   private Encoder m_leftEncoder;
   private Encoder m_rightEncoder;
-
   public Shooter() {
     m_leftFlyWheel = new WPI_TalonFX(ShooterCostants.kLeftFlyWheel);
     m_rightFlyWheel = new WPI_TalonFX(ShooterCostants.kRightFlyWheel);
@@ -31,11 +30,12 @@ public class Shooter extends SubsystemBase {
   /**
    * <h3>Calculates the RPM of an individual motor</h3>
    * 
-   * @param encoder The encoder that linked to the chosen motor.
-   * @param distancePerPulse The scale factor that will be used to convert pulses to useful units.
+   * @param encoder          The encoder that linked to the chosen motor.
+   * @param distancePerPulse The scale factor that will be used to convert pulses
+   *                         to useful units.
    * @return The motor's RPM.
    */
-  private double calcMotorRpm(Encoder encoder, double distancePerPulse){
+  private double calcMotorRpm(Encoder encoder, double distancePerPulse) {
     double rate = encoder.getRate();
     double rpm = rate * 60 / distancePerPulse;
 
@@ -43,11 +43,11 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * <h3> Gets the FlyWheel's shooter RPM </h3>
+   * <h3>Gets the FlyWheel's shooter RPM</h3>
    * 
    * @returns the FlyWheel's RPM
    */
-  public double getFlyWheelRpm(){
+  public double getFlyWheelRpm() {
     double leftMotorRpm = calcMotorRpm(m_leftEncoder, ShooterCostants.kEncoderDistancePerPulse);
     double rightMotorRpm = calcMotorRpm(m_rightEncoder, ShooterCostants.kEncoderDistancePerPulse);
 
