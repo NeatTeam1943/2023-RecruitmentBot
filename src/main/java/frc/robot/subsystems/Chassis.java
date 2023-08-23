@@ -4,36 +4,29 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DriveTrainConstants;
 
 public class Chassis extends SubsystemBase {
-  private WPI_TalonFX m_leftFront;
-  private WPI_TalonFX m_leftRear;
-  private WPI_TalonFX m_rightFront;
-  private WPI_TalonFX m_rightRear;
+  private VictorSP m_leftFront;
+  private VictorSP m_leftRear;
+  private VictorSP m_rightFront;
+  private VictorSP m_rightRear;
 
   private ADIS16470_IMU m_imu;
 
   private MecanumDrive m_drive;
 
   public Chassis() {
-    m_leftFront = new WPI_TalonFX(DriveTrainConstants.kLeftFrontPort);
-    m_leftRear = new WPI_TalonFX(DriveTrainConstants.kLeftRearPort);
-    m_rightFront = new WPI_TalonFX(DriveTrainConstants.kRightFrontPort);
-    m_rightRear = new WPI_TalonFX(DriveTrainConstants.kRightRearPort);
-
-    m_leftFront.setNeutralMode(NeutralMode.Brake);
-    m_leftRear.setNeutralMode(NeutralMode.Brake);
-    m_rightFront.setNeutralMode(NeutralMode.Brake);
-    m_rightRear.setNeutralMode(NeutralMode.Brake);
+    m_leftFront = new VictorSP(DriveTrainConstants.kLeftFrontPort);
+    m_leftRear = new VictorSP(DriveTrainConstants.kLeftRearPort);
+    m_rightFront = new VictorSP(DriveTrainConstants.kRightFrontPort);
+    m_rightRear = new VictorSP(DriveTrainConstants.kRightRearPort);
 
     m_imu = new ADIS16470_IMU();
 
@@ -42,7 +35,6 @@ public class Chassis extends SubsystemBase {
 
     m_drive = new MecanumDrive(m_leftFront, m_leftRear, m_rightFront, m_rightRear);
   }
-
 
   /**
    * <h3> Drives the robot using the joystick values </h3>
