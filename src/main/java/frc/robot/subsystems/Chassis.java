@@ -43,6 +43,13 @@ public class Chassis extends SubsystemBase {
     m_drive = new MecanumDrive(m_leftFront, m_leftRear, m_rightFront, m_rightRear);
   }
 
+
+  /**
+   * <h3> Drives the robot using the joystick values </h3>
+   * <p> Uses the driveCartesian method of the MecanumDrive class </p>
+   * 
+   * @param  joystick  The joystick to use
+   */
   public void drive(CommandXboxController joystick){
     m_drive.driveCartesian(joystick.getLeftX(), joystick.getLeftY(), joystick.getRightX(), new Rotation2d(m_imu.getAngle()));
   }
