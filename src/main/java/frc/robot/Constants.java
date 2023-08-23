@@ -18,6 +18,7 @@ public final class Constants {
 
     public static final int kBottomSolonoidDeploy = 4;
     public static final int kBottomSolonoidRetract = 3;
+
   }
 
   public static class ShooterCostants {
@@ -31,5 +32,7 @@ public final class Constants {
 
     public static final int kRightEncoderChannelA = 0;
     public static final int kRightEncoderChannelB = 1;
+
+    public static final double kShoot = 15000; 
   }
 }
