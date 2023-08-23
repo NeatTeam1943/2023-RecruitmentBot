@@ -4,21 +4,21 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterCostants;
 
 public class Shooter extends SubsystemBase {
-  private WPI_TalonFX m_leftFlyWheel;
-  private WPI_TalonFX m_rightFlyWheel;
+  private VictorSP m_leftFlyWheel;
+  private VictorSP m_rightFlyWheel;
 
   private Encoder m_leftEncoder;
   private Encoder m_rightEncoder;
+  
   public Shooter() {
-    m_leftFlyWheel = new WPI_TalonFX(ShooterCostants.kLeftFlyWheel);
-    m_rightFlyWheel = new WPI_TalonFX(ShooterCostants.kRightFlyWheel);
+    m_leftFlyWheel = new VictorSP(ShooterCostants.kLeftFlyWheel);
+    m_rightFlyWheel = new VictorSP(ShooterCostants.kRightFlyWheel);
 
     m_leftEncoder = new Encoder(ShooterCostants.kLeftEncoderChannelA, ShooterCostants.kLeftEncoderChannelB);
     m_rightEncoder = new Encoder(ShooterCostants.kRightEncoderChannelA, ShooterCostants.kRightEncoderChannelB);
