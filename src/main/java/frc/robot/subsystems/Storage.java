@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -21,12 +19,12 @@ public class Storage extends SubsystemBase {
 
   public Storage() {
     m_topStorageSolonoid = new DoubleSolenoid(
-        PneumaticsModuleType.REVPH,
+        PneumaticsModuleType.CTREPCM,
         StorageConstants.kTopSolonoidDeploy,
         StorageConstants.kTopSolonoidRetract);
 
     m_bottomStorageSolonid = new DoubleSolenoid(
-        PneumaticsModuleType.REVPH,
+        PneumaticsModuleType.CTREPCM,
         StorageConstants.kBottomSolonoidDeploy,
         StorageConstants.kBottomSolonoidRetract);
   }
@@ -52,10 +50,12 @@ public class Storage extends SubsystemBase {
     switch (solonoid) {
       case TOP:
         m_topStorageSolonoid.set(value);
+        System.out.println("Which Storage:" + solonoid + "\nValue:" + value);
         break;
 
       case BOTTOM:
         m_bottomStorageSolonid.set(value);
+        System.out.println("Which Storage:" + solonoid + "\nValue:" + value);
         break;
     }
   }
