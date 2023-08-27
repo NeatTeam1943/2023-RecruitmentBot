@@ -78,4 +78,12 @@ public class Storage extends SubsystemBase {
         break;
     }
   }
+
+  public DoubleSolenoid getTopSolonoid(){
+    return m_topStorageSolonoid;
+  }
+
+  public DoubleSolenoid getBottomSolonoid(){
+    return m_bottomStorageSolonid;
+  }
 }
