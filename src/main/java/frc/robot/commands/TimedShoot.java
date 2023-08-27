@@ -11,8 +11,8 @@ import frc.robot.subsystems.Shooter;
 public class TimedShoot extends CommandBase {
   private Shooter m_shooter;
   private Timer m_time;
-  
-  public TimedShoot(Shooter shooter){
+
+  public TimedShoot(Shooter shooter) {
     m_shooter = shooter;
     m_time = new Timer();
 
@@ -27,6 +27,10 @@ public class TimedShoot extends CommandBase {
   @Override
   public void execute() {
     m_shooter.setFlyWheelSpeed(1);
+  }
+
+  public void end(boolean interapted) {
+    m_time.stop();
   }
 
   @Override
