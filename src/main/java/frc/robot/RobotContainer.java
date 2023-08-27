@@ -24,7 +24,8 @@ public class RobotContainer {
     private final Storage m_storage = new Storage();
     private final Shooter m_shooter = new Shooter();
 
-    private final Shoot m_shoot = new Shoot(m_shooter);
+//     private final Shoot m_shoot = new Shoot(m_shooter);
+    private final TimedShoot m_timedShoot = new TimedShoot(m_shooter); 
 
     private final Dictionary<String, Command> shootingCommands = new Hashtable<>();
 
@@ -35,7 +36,8 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        shootingCommands.put("Get to the right rpm", m_shoot);
+        // shootingCommands.put("Get to the right rpm", m_shoot);
+        shootingCommands.put("Move motors for 5s", m_timedShoot);
         shootingCommands.put("Retracke base Solonoid",
                 Commands.run(() -> m_storage.setSolonid(WhichStorage.BOTTOM, Value.kReverse), m_storage));
         shootingCommands.put("wait 1s", new WaitCommand(1));
@@ -50,10 +52,9 @@ public class RobotContainer {
         shootingCommands.put("Toggle base solonoid",
                 Commands.run(() -> m_storage.toggleSolonoid(WhichStorage.BOTTOM), m_storage));
 
-        m_driverController.x()
-                .whileTrue(
-                        Commands.sequence(
-                                shootingCommands.get("Get to the right rpm"),
+        m_driverController.x().whileTrue(Commands.sequence(
+        //   shootingCommands.get("Get to the right rpm"),
+          shootingCommands.get("Move motors for 5s"),
                                 shootingCommands.get("Retracke base Solonoid"),
                                 shootingCommands.get("wait 1s"),
                                 shootingCommands.get("Deploy base solonoid"),
