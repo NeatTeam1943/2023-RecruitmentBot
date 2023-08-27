@@ -43,6 +43,18 @@ public class Chassis extends SubsystemBase {
    * @param  joystick  The joystick to use
    */
   public void drive(CommandXboxController joystick){
-    m_drive.driveCartesian(joystick.getLeftX(), joystick.getLeftY(), joystick.getRightX(), new Rotation2d(m_imu.getAngle()));
+
+    // m_drive.driveCartesian(joystick.getLeftX(), -joystick.getLeftY(), joystick.getRightX(), new Rotation2d(m_imu.getAngle()));
+
+    double speed = Math.abs(joystick.getLeftY()) + Math.abs(joystick.getLeftX()) + Math.abs(joystick.getRightX());
+
+    if (speed > 0.3){
+      m_leftFront.set(-joystick.getLeftY() + joystick.getRightX() + joystick.getLeftX());
+      m_leftRear.set(-joystick.getLeftY() + joystick.getRightX() - joystick.getLeftX());
+  
+      m_rightFront.set(-joystick.getLeftY() - joystick.getRightX() - joystick.getLeftX());
+      m_rightRear.set(-joystick.getLeftY() - joystick.getRightX() + joystick.getLeftX());
+    }
   }
+
 }
