@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.TimedShoot;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Storage;
@@ -48,19 +49,19 @@ public class RobotContainer {
         shootingCommands.put("Deploy top solonoid",
                 Commands.run(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kForward), m_storage));
         shootingCommands.put("Toggle top solonoid",
-                Commands.run(() -> m_storage.toggleSolonoid(WhichStorage.TOP), m_storage));
+                Commands.run(() -> m_storage.getTopSolonoid().toggle(), m_storage));
         shootingCommands.put("Toggle base solonoid",
-                Commands.run(() -> m_storage.toggleSolonoid(WhichStorage.BOTTOM), m_storage));
+                Commands.run(() -> m_storage.getBottomSolonoid().toggle(), m_storage));
 
         m_driverController.x().whileTrue(Commands.sequence(
         //   shootingCommands.get("Get to the right rpm"),
           shootingCommands.get("Move motors for 5s"),
-                                shootingCommands.get("Retracke base Solonoid"),
-                                shootingCommands.get("wait 1s"),
-                                shootingCommands.get("Deploy base solonoid"),
-                                shootingCommands.get("Retracke top solonoid"),
-                                shootingCommands.get("wait 1s"),
-                                shootingCommands.get("Deploy top solonoid")));
+          shootingCommands.get("Retracke base Solonoid"),
+          shootingCommands.get("wait 1s"),
+          shootingCommands.get("Deploy base solonoid"),
+          shootingCommands.get("Retracke top solonoid"),
+          shootingCommands.get("wait 1s"),
+          shootingCommands.get("Deploy top solonoid")));
 
         m_driverController.y().onTrue(shootingCommands.get("Toggle top solonoid"));
         m_driverController.a().onTrue(shootingCommands.get("Toggle base solonoid"));
