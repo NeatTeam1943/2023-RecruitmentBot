@@ -63,8 +63,8 @@ public class RobotContainer {
           shootingCommands.get("wait 1s"),
           shootingCommands.get("Deploy top solonoid")));
 
-        m_driverController.y().onTrue(shootingCommands.get("Toggle top solonoid"));
-        m_driverController.a().onTrue(shootingCommands.get("Toggle base solonoid"));
+        m_driverController.y().toggleOnTrue(shootingCommands.get("Toggle top solonoid"));
+        m_driverController.a().toggleOnTrue(shootingCommands.get("Toggle base solonoid"));
     }
 
     public Command getAutonomousCommand() {
