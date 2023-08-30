@@ -13,18 +13,20 @@ public class Shooter extends SubsystemBase {
   private VictorSP m_leftFlyWheel;
   private VictorSP m_rightFlyWheel;
 
-  private Encoder m_leftEncoder;
-  private Encoder m_rightEncoder;
+  // private Encoder m_leftEncoder;
+  // private Encoder m_rightEncoder;
   
   public Shooter() {
     m_leftFlyWheel = new VictorSP(ShooterCostants.kLeftFlyWheel);
     m_rightFlyWheel = new VictorSP(ShooterCostants.kRightFlyWheel);
 
-    m_leftEncoder = new Encoder(ShooterCostants.kLeftEncoderChannelA, ShooterCostants.kLeftEncoderChannelB);
-    m_rightEncoder = new Encoder(ShooterCostants.kRightEncoderChannelA, ShooterCostants.kRightEncoderChannelB);
+    m_leftFlyWheel.setInverted(true);
 
-    m_leftEncoder.setReverseDirection(false);
-    m_leftEncoder.setDistancePerPulse(ShooterCostants.kEncoderDistancePerPulse);
+    // m_leftEncoder = new Encoder(ShooterCostants.kLeftEncoderChannelA, ShooterCostants.kLeftEncoderChannelB);
+    // m_rightEncoder = new Encoder(ShooterCostants.kRightEncoderChannelA, ShooterCostants.kRightEncoderChannelB);
+
+    // m_leftEncoder.setReverseDirection(true);
+    // m_leftEncoder.setDistancePerPulse(ShooterCostants.kEncoderDistancePerPulse);
   }
 
   /**
@@ -47,14 +49,14 @@ public class Shooter extends SubsystemBase {
    * 
    * @returns the FlyWheel's RPM
    */
-  public double getFlyWheelRpm() {
-    double leftMotorRpm = calcMotorRpm(m_leftEncoder, ShooterCostants.kEncoderDistancePerPulse);
-    double rightMotorRpm = calcMotorRpm(m_rightEncoder, ShooterCostants.kEncoderDistancePerPulse);
+  // public double getFlyWheelRpm() {
+    // double leftMotorRpm = calcMotorRpm(m_leftEncoder, ShooterCostants.kEncoderDistancePerPulse);
+    // double rightMotorRpm = calcMotorRpm(m_rightEncoder, ShooterCostants.kEncoderDistancePerPulse);
 
-    double flyWheelRpm = (leftMotorRpm + rightMotorRpm) / 2;
+    // double flyWheelRpm = (leftMotorRpm + rightMotorRpm) / 2;
 
-    return flyWheelRpm;
-  }
+    // return flyWheelRpm;
+  // }
 
   /**
    * <h3>Set Flywheel Speed</h3>
