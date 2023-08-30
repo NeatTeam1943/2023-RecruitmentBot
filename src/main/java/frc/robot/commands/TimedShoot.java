@@ -31,6 +31,9 @@ public class TimedShoot extends CommandBase {
 
   public void end(boolean interapted) {
     m_time.stop();
+    m_shooter.setFlyWheelSpeed(0);
+
+    System.out.println("~~~Finished Shooting~~~");
   }
 
   @Override
