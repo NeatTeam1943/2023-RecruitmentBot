@@ -86,4 +86,9 @@ public class Storage extends SubsystemBase {
   public DoubleSolenoid getBottomSolonoid(){
     return m_bottomStorageSolonid;
   }
+
+  public void disableSolonoids(){
+    setSolonid(WhichStorage.BOTTOM, Value.kOff);
+    setSolonid(WhichStorage.TOP, Value.kOff);
+  }
 }
