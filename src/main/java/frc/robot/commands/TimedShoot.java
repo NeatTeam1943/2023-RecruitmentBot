@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterCostants;
 import frc.robot.subsystems.Shooter;
 
 public class TimedShoot extends CommandBase {
@@ -21,6 +22,7 @@ public class TimedShoot extends CommandBase {
 
   @Override
   public void initialize() {
+    m_time.reset();
     m_time.start();
   }
 
@@ -31,13 +33,14 @@ public class TimedShoot extends CommandBase {
 
   public void end(boolean interapted) {
     m_time.stop();
-    m_shooter.setFlyWheelSpeed(0);
+    m_time.reset();
+    // m_shooter.setFlyWheelSpeed(0);
 
     System.out.println("~~~Finished Shooting~~~");
   }
 
   @Override
   public boolean isFinished() {
-    return m_time.get() >= 5;
+    return m_time.get() >= ShooterCostants.kTimedShoot;
   }
 }

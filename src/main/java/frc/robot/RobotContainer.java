@@ -44,20 +44,29 @@ public class RobotContainer {
 
     private void configureBindings() {
         m_driverController.leftBumper().whileTrue(Commands.sequence(
+          Commands.runOnce(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kForward), m_storage),
           m_timedShoot,
-          Commands.run(() -> m_storage.setSolonid(WhichStorage.BOTTOM, Value.kReverse), m_storage),
+          Commands.runOnce(() -> m_storage.setSolonid(WhichStorage.BOTTOM, Value.kReverse), m_storage),
           new WaitCommand(1),
-          Commands.run(() -> m_storage.setSolonid(WhichStorage.BOTTOM, Value.kForward), m_storage),
-          Commands.run(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kReverse), m_storage),
+          Commands.runOnce(() -> m_storage.setSolonid(WhichStorage.BOTTOM, Value.kForward), m_storage),
+          Commands.runOnce(() -> m_shooter.setFlyWheelSpeed(0), m_shooter),
+          Commands.runOnce(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kReverse), m_storage),
           new WaitCommand(1),
-          Commands.run(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kForward), m_storage)));
+          Commands.runOnce(() -> m_storage.setSolonid(WhichStorage.TOP, Value.kForward), m_storage)
+        ));
 
 
         m_driverController.x().onTrue(Commands.run(() -> m_storage.getTopSolonoid().set(Value.kForward), m_storage));
-        m_driverController.y().onTrue(Commands.run(() -> m_storage.getTopSolonoid().set(Value.kReverse), m_storage));
+        m_driverController.y().onTrue(Commands.sequence(
+            Commands.runOnce(() -> m_storage.getBottomSolonoid().set(Value.kForward), m_storage),
+            Commands.runOnce(() -> m_storage.getTopSolonoid().set(Value.kReverse), m_storage)
+        ));
 
         m_driverController.a().onTrue(Commands.run(() -> m_storage.getBottomSolonoid().set(Value.kForward), m_storage));
-        m_driverController.b().onTrue(Commands.run(() -> m_storage.getBottomSolonoid().set(Value.kReverse), m_storage));
+        m_driverController.b().onTrue(Commands.sequence(
+            Commands.runOnce(() -> m_storage.getTopSolonoid().set(Value.kForward), m_storage),
+            Commands.runOnce(() -> m_storage.getBottomSolonoid().set(Value.kReverse), m_storage)
+        ));
     }
 
     public Storage getStorage(){
