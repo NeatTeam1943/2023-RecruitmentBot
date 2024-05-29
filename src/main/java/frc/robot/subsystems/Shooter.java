@@ -8,23 +8,30 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterCostants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends SubsystemBase {
   private VictorSP m_leftFlyWheel;
   private VictorSP m_rightFlyWheel;
 
-  private Encoder m_leftEncoder;
-  private Encoder m_rightEncoder;
-  
+  private double lastSpeed;
+
+  // private Encoder m_leftEncoder;
+  // private Encoder m_rightEncoder;
+
   public Shooter() {
     m_leftFlyWheel = new VictorSP(ShooterCostants.kLeftFlyWheel);
     m_rightFlyWheel = new VictorSP(ShooterCostants.kRightFlyWheel);
 
-    m_leftEncoder = new Encoder(ShooterCostants.kLeftEncoderChannelA, ShooterCostants.kLeftEncoderChannelB);
-    m_rightEncoder = new Encoder(ShooterCostants.kRightEncoderChannelA, ShooterCostants.kRightEncoderChannelB);
+    m_leftFlyWheel.setInverted(true);
 
-    m_leftEncoder.setReverseDirection(false);
-    m_leftEncoder.setDistancePerPulse(ShooterCostants.kEncoderDistancePerPulse);
+    // m_leftEncoder = new Encoder(ShooterCostants.kLeftEncoderChannelA,
+    // ShooterCostants.kLeftEncoderChannelB);
+    // m_rightEncoder = new Encoder(ShooterCostants.kRightEncoderChannelA,
+    // ShooterCostants.kRightEncoderChannelB);
+
+    // m_leftEncoder.setReverseDirection(true);
+    // m_leftEncoder.setDistancePerPulse(ShooterCostants.kEncoderDistancePerPulse);
   }
 
   /**
@@ -47,13 +54,31 @@ public class Shooter extends SubsystemBase {
    * 
    * @returns the FlyWheel's RPM
    */
-  public double getFlyWheelRpm() {
-    double leftMotorRpm = calcMotorRpm(m_leftEncoder, ShooterCostants.kEncoderDistancePerPulse);
-    double rightMotorRpm = calcMotorRpm(m_rightEncoder, ShooterCostants.kEncoderDistancePerPulse);
+  // public double getFlyWheelRpm() {
+  // double leftMotorRpm = calcMotorRpm(m_leftEncoder,
+  // ShooterCostants.kEncoderDistancePerPulse);
+  // double rightMotorRpm = calcMotorRpm(m_rightEncoder,
+  // ShooterCostants.kEncoderDistancePerPulse);
 
-    double flyWheelRpm = (leftMotorRpm + rightMotorRpm) / 2;
+  // double flyWheelRpm = (leftMotorRpm + rightMotorRpm) / 2;
 
-    return flyWheelRpm;
+  // return flyWheelRpm;
+  // }
+
+  /**
+   * <h3>Set Flywheel Speed</h3>
+   * 
+   * @param speed speed of the flywheel
+   */
+  public void setFlyWheelSpeed(double speed, boolean noOverride) {
+    if (noOverride == false) {
+      double maxPower = SmartDashboard.getNumber(ShooterCostants.kMaxPowerKey, ShooterCostants.kMaxPower) / ShooterCostants.kSliderMaxValue;
+      speed = Math.min(speed, maxPower);
+      System.out.println("~~~maxPower" + maxPower + "~~~");
+    }
+    m_leftFlyWheel.set(speed);
+    m_rightFlyWheel.set(speed);
+    lastSpeed = speed;
   }
 
   /**
@@ -61,8 +86,13 @@ public class Shooter extends SubsystemBase {
    * 
    * @param speed speed of the flywheel
    */
-  public void setFlyWheelSpeed(double speed) {
-    m_leftFlyWheel.set(speed);
-    m_rightFlyWheel.set(speed);
+  public void stopFlyWheel() {
+    m_leftFlyWheel.set(0);
+    m_rightFlyWheel.set(0);
+    lastSpeed = 0;
+  }
+
+  public double getLastSpeed() {
+    return lastSpeed;
   }
 }
