@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterCostants;
 import frc.robot.subsystems.Shooter;
@@ -28,7 +29,8 @@ public class TimedShoot extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.setFlyWheelSpeed(1);
+    double power = SmartDashboard.getNumber(ShooterCostants.kMaxPowerKeyAuto, 1) / ShooterCostants.kSliderMaxValue;
+    m_shooter.setFlyWheelSpeed(power, true);
   }
 
   public void end(boolean interapted) {
