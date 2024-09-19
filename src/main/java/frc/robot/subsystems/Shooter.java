@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
     if (noOverride == false) {
       double maxPower = SmartDashboard.getNumber(ShooterCostants.kMaxPowerKey, ShooterCostants.kMaxPower) / ShooterCostants.kSliderMaxValue;
       speed = Math.min(speed, maxPower);
-      System.out.println("~~~maxPower" + maxPower + "~~~");
+      // System.out.println("~~~maxPower" + maxPower + "~~~");
     }
     m_leftFlyWheel.set(speed);
     m_rightFlyWheel.set(speed);

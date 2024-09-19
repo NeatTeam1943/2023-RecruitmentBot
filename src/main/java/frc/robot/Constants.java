@@ -34,7 +34,8 @@ public final class Constants {
   }
 
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kDriverControllerPort = 1;
+    public static final int kOverrideControllerPort = 0;
   }
 
   public static class DriveTrainConstants {

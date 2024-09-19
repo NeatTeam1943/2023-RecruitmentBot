@@ -56,33 +56,33 @@ public class Chassis extends SubsystemBase {
    * 
    * @param joystick The joystick to use
    */
-  public void drive(CommandXboxController joystick) {
+  public void drive(CommandXboxController joystick, CommandXboxController override) {
 
-    // m_drive.driveCartesian(joystick.getLeftX(), -joystick.getLeftY(),
-    // joystick.getRightX(), new Rotation2d(m_imu.getAngle()));
+    double leftY = -joystick.getLeftY(),
+        leftX = joystick.getLeftX(),
+        rightX = joystick.getRightX();
+
+    if (override.getLeftTriggerAxis() == 0) {
+      leftY = -override.getLeftY();
+      leftX = override.getLeftX();
+      rightX = override.getRightX();
+    }
 
     boolean isDifferential = SmartDashboard.getBoolean(SmartDashboardValues.Basic.kButton0Key, false);
 
     if (!isDifferential) {
-      double speed = Math.abs(joystick.getLeftY()) + Math.abs(joystick.getLeftX()) + Math.abs(joystick.getRightX());
+      double speed = Math.abs(leftY) + Math.abs(leftX) + Math.abs(rightX);
 
       if (speed > 0.3) {
-        m_leftFront.set(-joystick.getLeftY() + joystick.getRightX() +
-            joystick.getLeftX());
-        m_leftRear.set(-joystick.getLeftY() + joystick.getRightX() -
-            joystick.getLeftX());
+        m_leftFront.set(leftY + rightX + leftX);
+        m_leftRear.set(leftY + rightX - leftX);
 
-        m_rightFront.set(-joystick.getLeftY() - joystick.getRightX() -
-            joystick.getLeftX());
-        m_rightRear.set(-joystick.getLeftY() - joystick.getRightX() +
-            joystick.getLeftX());
-
-        // m_drive.driveCartesian(joystick.getLeftX(), joystick.getLeftY(),
-        // joystick.getRightX());
+        m_rightFront.set(leftY - rightX - leftX);
+        m_rightRear.set(leftY - rightX + leftX);
       }
       SmartDashboard.putString(SmartDashboardValues.Basic.kString0Key, "Mecanum Drive");
     } else {
-      m_DifferentialDrive.arcadeDrive(-joystick.getLeftY(), -joystick.getLeftX());
+      m_DifferentialDrive.arcadeDrive(leftY, -leftX);
       SmartDashboard.putString(SmartDashboardValues.Basic.kString0Key, "Differential Drive");
     }
   }
