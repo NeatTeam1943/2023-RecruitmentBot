@@ -69,10 +69,14 @@ public class RobotContainer {
                 Commands.runOnce(() -> SmartDashboard.putBoolean(SmartDashboardValues.Basic.kLed0Key, false)),
                 Commands.runOnce(() -> {
                     m_driverController.getHID().setRumble(RumbleType.kBothRumble, 0);
-                    m_overrideController.getHID().setRumble(RumbleType.kBothRumble, 1.0);
+                    m_overrideController.getHID().setRumble(RumbleType.kBothRumble, 0);
                 }));
 
-        m_driverController.leftBumper().onTrue(timeShoot);
+        m_driverController.leftBumper().onTrue(Commands.runOnce(() -> {
+                if (m_overrideController.getLeftTriggerAxis() != 0) {
+                        timeShoot.schedule();
+                }
+        }));
         m_overrideController.leftBumper().onTrue(timeShoot);
         m_driverController.rightBumper().onTrue(Commands.sequence(
                 Commands.runOnce(() -> timeShoot.cancel()),
@@ -123,6 +127,6 @@ public class RobotContainer {
 
     public void stopRumble() {        
         m_driverController.getHID().setRumble(RumbleType.kBothRumble, 0);
-        m_overrideController.getHID().setRumble(RumbleType.kBothRumble, 1.0);
+        m_overrideController.getHID().setRumble(RumbleType.kBothRumble, 0);
     }
 }
